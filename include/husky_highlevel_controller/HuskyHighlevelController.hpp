@@ -36,13 +36,6 @@ private:
 	std::string scanTopicName;
 	int scanTopicQueueSize;
 
-	//variable declarations realated to publisher
-	ros::Publisher pubCmdVel;
-	std::string pubTopicName;
-	int pubTopicQueueSize;
-	geometry_msgs::Twist velMsg;
-
-	bool side;
 };
 
 } /* namespace */

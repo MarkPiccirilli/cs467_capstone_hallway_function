@@ -13,8 +13,6 @@ HuskyHighlevelController::HuskyHighlevelController(ros::NodeHandle& nodeHandle) 
 	
 	//launch subscriber
 	subscriber = nodeHandle.subscribe(scanTopicName, scanTopicQueueSize, &HuskyHighlevelController::scanCallback, this);
-	//launch publisher
-	pubCmdVel = nodeHandle.advertise<geometry_msgs::Twist>(pubTopicName, pubTopicQueueSize);
 	ROS_INFO("Node has been launched successfully");
 }
 
@@ -33,16 +31,6 @@ bool HuskyHighlevelController::readParameters() {
 	if(!nodeHandle.getParam("scanTopicQueueSize", scanTopicQueueSize)) {
 		return false;
 	}
-
-	//get publisher topic name parameter
-	if(!nodeHandle.getParam("pubTopicName", pubTopicName)) {
-		return false;
-	}
- 
-	//get publisher queue size parameter
-	if(!nodeHandle.getParam("pubTopicQueueSize", pubTopicQueueSize)) {
-		return false;
-	}	
 
 	return true;
 }
@@ -80,51 +68,6 @@ void HuskyHighlevelController::scanCallback(const sensor_msgs::LaserScan& msg) {
 
 	ROS_INFO_STREAM("left: " << left << " Right: " << right << " size: " << size << std::endl);
 	
-	ROS_INFO_STREAM("side: " << side);
-
-	//if robot is in the center, go straight forward
-	if (abs(left - right) < .7) {
-		if(side) { //right side
-			if(left - right > 0) { //before center point
-				velMsg.linear.x = 1;
-				velMsg.angular.z = (right - left) * .3;
-				ROS_INFO("TEST 1"); //testing code
-			}
-			else { //after center point
-				velMsg.linear.x = 1;
-				velMsg.angular.z = 0;
-				ROS_INFO("TEST 2"); //testing code
-			}
-		}		
-		else { //left side
-			if(left - right < 0) { //before center point
-				velMsg.linear.x = 1;
-				velMsg.angular.z = (right - left) * .3;
-				ROS_INFO("TEST 1"); //testing code
-			}
-			else { //after center point
-				velMsg.linear.x = 1;
-				velMsg.angular.z = 0;
-				ROS_INFO("TEST 2"); //testing code
-			}
-
-		}
-	}
-	//if robot is not in center, move towards center
-	else {
-		if(left - right < 0) { //left side
-			side = false;
-		}
-		else { //right side
-			side = true;
-		}
-		velMsg.linear.x = .7;
-		velMsg.angular.z = (left - right) * .03;
-		ROS_INFO_STREAM("l-r: " << left - right << std::endl); //testing code
-	}
-
-	//publish command velocity
-	pubCmdVel.publish(velMsg);
 }
 
 } /* namespace */
