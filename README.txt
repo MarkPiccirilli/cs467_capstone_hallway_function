@@ -46,4 +46,6 @@ the run the launch file by typing
 
 roslaunch husky_highlevel_controller husky_highlevel_controller.launch and the simulation should run in gazebo and rviz
 
+to see stuff in rviz you must set fixed frame to odom.  Then select add, go to the topics tab, find the /scan topic, and select Laser_scan, and then click ok.  zoom way out and you should see the lazer dots on the wall.  Its helpful to increase the size from .01 to .1
+
 Let me know if this works or if you have problems, I just kinda typed these instructions from memory without testing so there will likey be problems.
