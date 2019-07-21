@@ -29,7 +29,7 @@ source devel/setup.bash
 
 to source your workspace
 
-then clone the repository into the src folder.
+then copy or clone the repository into the src folder.
 
 Alternatively you can clone the repository into another folder and the symbollically link it into the src folder by typeing:
 
@@ -45,3 +45,5 @@ source devel/setup.bash
 the run the launch file by typing 
 
 roslaunch husky_highlevel_controller husky_highlevel_controller.launch and the simulation should run in gazebo and rviz
+
+Let me know if this works or if you have problems, I just kinda typed these instructions from memory without testing so there will likey be problems.
